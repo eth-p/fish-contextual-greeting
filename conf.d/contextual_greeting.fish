@@ -52,7 +52,8 @@ if [ "$SHLVL" != "1" ]
 end
 
 # Detect if there's already a tmux pane or window. 
-if test (tmux list-windows -F '#{window_panes}' 2>/dev/null | string join ' ') != 1
+set -l tmux_windows (tmux list-windows -F '#{window_panes}' 2>/dev/null | string join ' + ')
+if test -n "$tmux_windows" && test "$tmux_windows" != "1"
 	set __contextualgreeting_toplevel false
 end
 
